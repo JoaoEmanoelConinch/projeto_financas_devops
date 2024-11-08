@@ -1,0 +1,15 @@
+<h2>Transações</h2>
+<ul>
+  <li *ngFor="let transacao of transacoes">
+    {{ transacao.descricao }} - R$ {{ transacao.valor }} em {{ transacao.data }}
+    <button (click)="removerTransacao(transacao.id!)">Remover</button>
+  </li>
+</ul>
+
+<h3>Adicionar Transação</h3>
+<form (ngSubmit)="adicionarTransacao()">
+  <input [(ngModel)]="descricao" name="descricao" placeholder="Descrição" required>
+  <input [(ngModel)]="valor" name="valor" placeholder="Valor" type="number" required>
+  <input [(ngModel)]="data" name="data" type="date" required>
+  <button type="submit">Adicionar</button>
+</form>
