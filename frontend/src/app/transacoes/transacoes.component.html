@@ -8,8 +8,8 @@
 
 <h3>Adicionar Transação</h3>
 <form (ngSubmit)="adicionarTransacao()">
-  <input [(ngModel)]="descricao" name="descricao" placeholder="Descrição" required>
-  <input [(ngModel)]="valor" name="valor" placeholder="Valor" type="number" required>
-  <input [(ngModel)]="data" name="data" type="date" required>
-  <button type="submit">Adicionar</button>
+  <input [(ngModel)]="descricao" name="descricao" placeholder="Descrição" type="text" class="input" required>
+  <input [(ngModel)]="valor" name="valor" placeholder="Valor" type="number" class="input" required>
+  <input [(ngModel)]="data" name="data" type="date" class="input" required>
+  <button type="submit" class="button">Adicionar</button>
 </form>

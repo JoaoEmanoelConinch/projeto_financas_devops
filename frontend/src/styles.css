@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input {
+    @apply w-full max-w-[220px] h-[45px] p-[12px] rounded-[12px] border-[1.5px] border-gray-300 outline-none 
+            transition-all duration-300 ease-[cubic-bezier(0.19,1,0.22,1)] 
+            shadow-[0px_0px_20px_-18px_rgba(0,0,0,0.2)];
+}
+  
+.input:hover {
+    @apply border-2 shadow-[0px_0px_20px_-17px_rgba(0,0,0,0.2)];
+}
+
+.input:active {
+    @apply scale-95;
+}
+
+.input:focus {
+    @apply border-2 border-gray-500;
+}
+
+.button {
+    @apply bg-gray-300 border border-gray-300 rounded-md text-gray-900 text-sm font-semibold leading-5 
+        px-4 py-3 text-center shadow-sm cursor-pointer select-none transition hover:bg-gray-100 
+        focus:outline-none focus:ring-0;
+}
+  
