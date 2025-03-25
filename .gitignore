@@ -12,3 +12,5 @@ yarn-error.log
 
 # Builds do Angular
 dist/
+
+terraform-provider-aws*
