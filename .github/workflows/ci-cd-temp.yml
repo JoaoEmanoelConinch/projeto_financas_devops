@@ -4,14 +4,22 @@ on:
   push:
     branches:
       - "**"  # Executa em qualquer commit
+    paths:
+      - 'front/**'
+      - 'back/**'
   pull_request:
     branches:
       - "**"  # Executa em qualquer Pull Request (Merge Request)
+    paths:
+      - 'front/**'
+      - 'back/**'
   workflow_dispatch:  # Permite execução manual (usado no deploy para produção)
 
 jobs:
   ### ====== FRONT-END ====== ###
   test_front:
+    if: contains(github.event.head_commit.message, 'front/')
+    needs: build_front
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
@@ -31,7 +39,7 @@ jobs:
         run: npm test
 
   build_front:
-    needs: test_front
+    if: contains(github.event.head_commit.message, 'front/') 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
@@ -53,6 +61,8 @@ jobs:
 
   ### ====== BACK-END ====== ###
   test_back:
+    if: contains(github.event.head_commit.message, 'back/')
+    needs: build_back
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
@@ -72,7 +82,7 @@ jobs:
         run: npm test
 
   build_back:
-    needs: test_back
+    if: contains(github.event.head_commit.message, 'back/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
@@ -95,7 +105,7 @@ jobs:
   ### ====== DEPLOY AMBIENTE DEV (Somente após merge) ====== ###
   deploy_ambiente_dev:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
-    needs: [build_front, build_back]
+    needs: [test_front, test_back]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
@@ -117,7 +127,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER_DEV_IP: ${{ secrets.SERVER_DEV_IP }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_USER: ${{ secrets.SEVER_RUSER }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
@@ -147,8 +157,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: test_deploy_ambiente_dev
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
     steps:
       - name: Deploy manual para Produção
         run: echo "🚀 Pronto para Deploy! Execute manualmente no GitHub Actions."
-
