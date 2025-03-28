@@ -1,6 +1,6 @@
 output "coninch_nginx_ec2_id" {
   description = "ID of the EC2 instance"
-  value       = aws_instance.coninch_nginx.id
+  value       = aws_instance.coninch_nginx_ec2.id
   
 }
 
