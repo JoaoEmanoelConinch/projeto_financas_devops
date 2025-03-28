@@ -10,9 +10,6 @@ variable "project_name" {
     type=string
 }
 
-variable "subnet_pub_a_id" {
-    type=string
-}
-variable "subnet_pub_b_id" {
-    type=string
+variable "pub_subnets_id" {
+    type = list(string)
 }

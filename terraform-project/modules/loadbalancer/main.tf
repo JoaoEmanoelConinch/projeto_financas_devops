@@ -38,7 +38,7 @@ resource "aws_vpc_security_group_ingress_rule" "coninch_ingress_22_sg_rule" {
 }
 
 resource "aws_network_interface" "coninch_nginx_ei" {
-  subnet_id = var.subnet_pub_a_id
+  subnet_id = var.pub_subnets_id[0]
   tags = {
     Name = "coninch_nginx_ei"
   }
@@ -47,7 +47,7 @@ resource "aws_network_interface" "coninch_nginx_ei" {
 resource "aws_instance" "coninch_nginx_ec2" {
   instance_type = "t3.micro"
   ami = data.aws_ami.imagem_ec2.id
-  subnet_id = var.subnet_pub_a_id
+  subnet_id = var.pub_subnets_id[0]
   vpc_security_group_ids = [ aws_security_group.coninch_nginx_sg.id ]
   
   associate_public_ip_address = true

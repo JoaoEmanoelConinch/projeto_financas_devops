@@ -10,10 +10,21 @@ resource "aws_eip" "eip_nat" {
   vpc = true
 }
 
+resource "aws_subnet" "priv_subnets" {
+  for_each          = var.priv_subnets
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, each.value.ipv4)
+  availability_zone = "${var.project_region}${each.value.subnet_az}"
+  tags = {
+    Unity = "${var.project_name}-${each.value.subnet_Unity}"
+    Name  = "${var.project_name}-${each.value.subnet_name}"
+  }
+}
+
 resource "aws_subnet" "pub_subnets" {
   for_each          = var.pub_subnets
   vpc_id            = aws_vpc.vpc.id
-  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, 4)
+  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, each.value.ipv4)
   availability_zone = "${var.project_region}${each.value.subnet_az}"
   tags = {
     Unity = "${var.project_name}-${each.value.subnet_Unity}"
@@ -40,17 +51,6 @@ resource "aws_route_table" "route_pub" {
 }
 resource "aws_route_table_association" "route_pub_a" {
   for_each       = var.pub_subnets
-  subnet_id      = each.value.subnet_id
+  subnet_id      = aws_subnet.pub_subnets[each.key].id
   route_table_id = aws_route_table.route_pub.id
-}
-
-resource "aws_subnet" "priv_subnets" {
-  for_each          = var.priv_subnets
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, 4)
-  availability_zone = "${var.project_region}${each.value.subnet_az}"
-  tags = {
-    Unity = "${var.project_name}-${each.value.subnet_Unity}"
-    Name  = "${var.project_name}-${each.value.subnet_name}"
-  }
 }
