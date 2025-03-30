@@ -9,7 +9,7 @@ variable "project_name" {
 
 variable "vpc_cidr_block" {
   type    = string
-  default = "172.30.0.0/16"
+  default = "172.107.0.0/16"
 }
 
 variable "pub_subnets" {
