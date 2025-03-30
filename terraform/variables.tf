@@ -1,5 +1,5 @@
 variable "project_region" {
-    default = "us-east-1"
+    default = "us-west-1"
     type = string
 }
 
