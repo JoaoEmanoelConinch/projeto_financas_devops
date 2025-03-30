@@ -19,3 +19,11 @@ module "front-end" {
     vpc_id = module.vpc.vpc_id
     priv_subnets_id = module.vpc.priv_subnets_id
 }
+
+module "back-end" {
+    source = "./modules/back-end"
+    project_name = var.project_name
+    project_region = var.project_region
+    vpc_id = module.vpc.vpc_id
+    priv_subnets_id = module.vpc.priv_subnets_id
+}
