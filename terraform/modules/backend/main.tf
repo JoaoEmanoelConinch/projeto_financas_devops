@@ -19,7 +19,6 @@ resource "aws_instance" "lemke_back_ec2" {
   ami = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
   subnet_id = var.priv_subnets_id[0]
-  associate_public_ip_address = true
   tags = {
     Name = "lemke_back_ec2"
   }

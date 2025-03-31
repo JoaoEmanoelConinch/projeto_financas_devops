@@ -51,6 +51,47 @@ resource "aws_instance" "lemke_nginx_ec2" {
   vpc_security_group_ids = [ aws_security_group.lemke_nginx_sg.id ]
   
   associate_public_ip_address = true
+
+  user_data = <<-EOF
+            #!/bin/bash
+            exec > /var/log/user-data.log 2>&1
+
+            log() {
+                echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
+            }
+
+            check_error() {
+                if [ $? -ne 0 ]; then
+                    log "ERRO: $1"
+                    exit 1
+                else
+                    log "OK: $2"
+                fi
+            }
+
+            log "Iniciando instalação do NGINX no Amazon Linux..."
+
+            log "Atualizando pacotes..."
+            sudo yum update -y
+            check_error "Falha ao atualizar os pacotes." "Pacotes atualizados com sucesso."
+
+            log "Instalando NGINX..."
+            sudo yum install -y nginx
+            check_error "Falha na instalação do NGINX." "NGINX instalado com sucesso."
+
+            log "Iniciando o serviço NGINX..."
+            sudo systemctl start nginx
+            check_error "Falha ao iniciar o serviço NGINX." "NGINX iniciado com sucesso."
+
+            log "Habilitando NGINX para iniciar com o sistema..."
+            sudo systemctl enable nginx
+            check_error "Falha ao habilitar NGINX no boot." "NGINX habilitado com sucesso."
+
+            log "Criando página personalizada..."
+            echo "<h1>Servidor NGINX provisionado via Terraform</h1>" > /usr/share/nginx/html/index.html
+            check_error "Falha ao criar página HTML." "Página HTML personalizada criada com sucesso."
+            EOF
+            
   tags = {
     Name = "lemke-nginx_ec2"
   }
