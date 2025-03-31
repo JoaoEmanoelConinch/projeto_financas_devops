@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const transacoesRoutes = require('./routes/transacoes');
 
+
 const app = express();
 
 app.use(cors({ origin: 'http://localhost:4200' }));
