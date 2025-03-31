@@ -1,0 +1,39 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependecy-path: './frontend/package-lock.json'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
+      - name: Build
+        run: npm run build --prod
+      - name: Upload build artifacts
+        uses: actions/upload-aritifact@v3
+        with:
+          name: frontend-build
+          path: frontend/dist/
