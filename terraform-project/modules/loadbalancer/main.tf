@@ -75,10 +75,6 @@ resource "aws_instance" "coninch_nginx_ec2" {
             sudo yum update -y
             check_error "Falha ao atualizar os pacotes." "Pacotes atualizados com sucesso."
 
-            log "Habilitando repositório nginx1..."
-            sudo amazon-linux-extras enable nginx1
-            check_error "Falha ao habilitar o repositório nginx1." "Repositório nginx1 habilitado com sucesso."
-
             log "Instalando NGINX..."
             sudo yum install -y nginx
             check_error "Falha na instalação do NGINX." "NGINX instalado com sucesso."
