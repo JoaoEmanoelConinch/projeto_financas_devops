@@ -4,7 +4,7 @@
     <li *ngFor="let transacao of transacoes">
       {{ transacao.descricao }} - R$ {{ transacao.valor }} em
       {{ transacao.data }}
-      <button (click)="removerTransacao(transacao.id!)">-Remover</button>
+      <button (click)="removerTransacao(transacao.id!)">Remover</button>
     </li>
   </ul>
 
