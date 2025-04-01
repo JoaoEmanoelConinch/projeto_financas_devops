@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "build": "echo 'Nenhuma etapa de build necessária para este projeto'"
+    "build": "mkdir -p backend/dist && cp -r src/* backend/dist/"
   },
   "keywords": [],
   "author": "",
