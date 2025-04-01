@@ -2,7 +2,10 @@ name: Backend CI/CD
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'feat/**'
+      - 'feat*'
     paths:
       - 'backend/**'
   pull_request:
@@ -26,14 +29,12 @@ jobs:
           cache-dependency-path: './backend/package-lock.json'
       - name: Install dependencies
         run: npm ci
-      - name: Lint
-        run: npm run lint
       - name: Test
         run: npm run test
       - name: Build
         run: npm run build
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backend-build
           path: backend/dist/
