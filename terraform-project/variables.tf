@@ -1,10 +1,10 @@
 variable "project_region" {
-    default = "us-west-1"
-    type = string
+  default = "us-west-1"
+  type    = string
 }
 
 
 variable "project_name" {
-    default="coninch"
-    type=string
+  default = "coninch"
+  type    = string
 }
