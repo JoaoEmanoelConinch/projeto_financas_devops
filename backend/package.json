@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "build": "echo 'Nenhuma etapa de build necessária para este projeto'"
   },
   "keywords": [],
   "author": "",
