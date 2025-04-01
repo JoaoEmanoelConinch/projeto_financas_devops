@@ -12,3 +12,10 @@ yarn-error.log
 
 # Builds do Angular
 dist/
+
+# Arquivos de configuração do Terraform
+terraform-provider-aws*
+.terraform/
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+terraform.tfstate.backup
