@@ -45,9 +45,10 @@ resource "aws_network_interface" "coninch_nginx_ei" {
 }
 
 resource "aws_instance" "coninch_nginx_ec2" {
+  for_each               = toset(var.pub_subnets_id)
   instance_type          = "t3.micro"
   ami                    = data.aws_ami.imagem_ec2.id
-  subnet_id              = var.pub_subnets_id[0]
+  subnet_id              = each.value
   vpc_security_group_ids = [aws_security_group.coninch_nginx_sg.id]
 
   associate_public_ip_address = true
