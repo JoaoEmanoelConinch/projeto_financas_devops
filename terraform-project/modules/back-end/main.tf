@@ -6,7 +6,6 @@ data "aws_ami" "imagem_ec2" {
     values = ["al2023-ami-2023.*-x86_64"]
   }
 }
-
 resource "aws_security_group" "coninch_back_sg" {
   vpc_id = var.vpc_id
   name   = "coninch_back_sg"
@@ -20,6 +19,8 @@ resource "aws_instance" "coninch_back_ec2" {
   ami           = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
   subnet_id     = each.value
+
+  depends_on = [ var.priv_subnets ]
   tags = {
     Name = "coninch_back_ec2"
   }

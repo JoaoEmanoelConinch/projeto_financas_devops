@@ -7,3 +7,11 @@ output "pub_subnets_id" {
 output "priv_subnets_id" {
     value = [for subnet in aws_subnet.priv_subnets : subnet.id]
 }
+
+output "priv_subnets" {
+    value = aws_subnet.priv_subnets
+}
+
+output "pub_subnets" {
+  value = aws_subnet.pub_subnets
+}
