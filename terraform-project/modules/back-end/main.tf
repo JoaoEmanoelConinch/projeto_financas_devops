@@ -15,10 +15,15 @@ resource "aws_security_group" "coninch_back_sg" {
 }
 
 resource "aws_instance" "coninch_back_ec2" {
-  count = length(var.priv_subnets_id)
+  count         = length(var.priv_subnets_id)
   ami           = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
   subnet_id     = var.priv_subnets_id[count.index]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Name = "coninch_back_ec2"
   }

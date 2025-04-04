@@ -93,6 +93,10 @@ resource "aws_instance" "coninch_nginx_ec2" {
             check_error "Falha ao criar página HTML." "Página HTML personalizada criada com sucesso."
             EOF
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Name = "coninch-nginx_ec2"
   }
