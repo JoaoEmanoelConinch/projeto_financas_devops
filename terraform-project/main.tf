@@ -10,6 +10,8 @@ module "nginx_ec2" {
   project_region = var.project_region
   vpc_id         = module.vpc.vpc_id
   pub_subnets_id = module.vpc.pub_subnets_id
+  
+  depends_on = [ module.vpc , module.front-end]
 }
 
 module "front-end" {
@@ -18,6 +20,8 @@ module "front-end" {
   project_region  = var.project_region
   vpc_id          = module.vpc.vpc_id
   priv_subnets_id = module.vpc.priv_subnets_id
+  
+  depends_on = [ module.vpc , module.back-end]
 }
 
 module "back-end" {
@@ -26,5 +30,6 @@ module "back-end" {
   project_region  = var.project_region
   vpc_id          = module.vpc.vpc_id
   priv_subnets_id = module.vpc.priv_subnets_id
-  priv_subnets    = module.vpc.resource.priv_subnets
+  
+  depends_on = [ module.vpc ]
 }

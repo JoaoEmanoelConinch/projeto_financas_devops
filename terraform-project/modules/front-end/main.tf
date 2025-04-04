@@ -16,10 +16,10 @@ resource "aws_security_group" "coninch_front_sg" {
 }
 
 resource "aws_instance" "coninch_front_ec2" {
-  for_each      = toset(var.priv_subnets_id)
+  count = length(var.priv_subnets_id)
   ami           = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
-  subnet_id     = each.value
+  subnet_id     = var.priv_subnets_id[count.index]
   tags = {
     Name = "coninch_front_ec2"
   }
