@@ -26,5 +26,5 @@ module "back-end" {
   project_region  = var.project_region
   vpc_id          = module.vpc.vpc_id
   priv_subnets_id = module.vpc.priv_subnets_id
-  priv_subnets = module.vpc.priv_subnets
+  priv_subnets    = module.vpc.resource.priv_subnets
 }

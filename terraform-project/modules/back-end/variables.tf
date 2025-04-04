@@ -13,8 +13,5 @@ variable "project_region" {
 
 variable "priv_subnets_id" {
     type        = list(string)
-}
-
-variable "priv_subnets" {
-    type = object({})
+    default     = []
 }

@@ -11,7 +11,3 @@ output "priv_subnets_id" {
 output "priv_subnets" {
     value = aws_subnet.priv_subnets
 }
-
-output "pub_subnets" {
-  value = aws_subnet.pub_subnets
-}
