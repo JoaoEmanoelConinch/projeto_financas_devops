@@ -7,15 +7,15 @@ data "aws_ami" "imagem_ec2" {
   }
 }
 
-resource "aws_security_group" "coninch_front_sg" {
+resource "aws_security_group" "grupo_b_front_sg" {
   vpc_id = var.vpc_id
-  name   = "coninch_front_sg"
+  name   = "grupo_b_front_sg"
   tags = {
-    Name = "coninch-front_sg"
+    Name = "grupo_b-front_sg"
   }
 }
 
-resource "aws_instance" "coninch_front_ec2" {
+resource "aws_instance" "grupo_b_front_ec2" {
   count         = length(var.priv_subnets_id)
   ami           = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
@@ -26,6 +26,6 @@ resource "aws_instance" "coninch_front_ec2" {
   }
 
   tags = {
-    Name = "coninch_front_ec2"
+    Name = "grupo_b_front_ec2"
   }
 }

@@ -5,6 +5,6 @@ variable "project_region" {
 
 
 variable "project_name" {
-  default = "coninch"
+  default = "grupo_b"
   type    = string
 }
