@@ -6,16 +6,15 @@ data "aws_ami" "imagem_ec2" {
     values = ["al2023-ami-2023.*-x86_64"]
   }
 }
-
-resource "aws_security_group" "grupo_b_dev_front_sg" {
+resource "aws_security_group" "grupo_b_back_sg" {
   vpc_id = var.vpc_id
-  name   = "grupo_b_dev_front_sg"
+  name   = "grupo_b_back_sg"
   tags = {
-    Name = "grupo_b_dev-front_sg"
+    Name = "grupo_b-back_sg"
   }
 }
 
-resource "aws_instance" "grupo_b_front_ec2" {
+resource "aws_instance" "grupo_b_back_ec2" {
   count         = length(var.priv_subnets_id)
   ami           = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
@@ -26,6 +25,6 @@ resource "aws_instance" "grupo_b_front_ec2" {
   }
 
   tags = {
-    Name = "grupo_b_dev_front_ec2"
+    Name = "grupo_b_back_ec2"
   }
 }
