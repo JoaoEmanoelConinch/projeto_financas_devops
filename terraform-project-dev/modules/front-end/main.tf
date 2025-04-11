@@ -7,11 +7,11 @@ data "aws_ami" "imagem_ec2" {
   }
 }
 
-resource "aws_security_group" "grupo_b_front_sg" {
+resource "aws_security_group" "grupo_b_dev_front_sg" {
   vpc_id = var.vpc_id
-  name   = "grupo_b_front_sg"
+  name   = "grupo_b_dev_front_sg"
   tags = {
-    Name = "grupo_b-front_sg"
+    Name = "grupo_b_dev-front_sg"
   }
 }
 
@@ -26,6 +26,6 @@ resource "aws_instance" "grupo_b_front_ec2" {
   }
 
   tags = {
-    Name = "grupo_b_front_ec2"
+    Name = "grupo_b_dev_front_ec2"
   }
 }
