@@ -5,6 +5,6 @@ variable "project_region" {
 
 
 variable "project_name" {
-  default = "grupo_b"
+  default = "grupo-b"
   type    = string
 }
