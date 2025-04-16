@@ -10,7 +10,11 @@ app.use(bodyParser.json());
 
 app.use('/transacoes', transacoesRoutes);
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  const port = 3000;
+  app.listen(port, () => {
+    console.log(`Servidores rodando na porta ${port}`);
+  });
+}
