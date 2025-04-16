@@ -15,6 +15,11 @@ resource "aws_subnet" "priv_subnets" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, each.value.ipv4)
   availability_zone = "${var.project_region}${each.value.subnet_az}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Unity = "${var.project_name}-${each.value.subnet_Unity}"
     Name  = "${var.project_name}-${each.value.subnet_name}"
@@ -26,6 +31,11 @@ resource "aws_subnet" "pub_subnets" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, each.value.ipv4)
   availability_zone = "${var.project_region}${each.value.subnet_az}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Unity = "${var.project_name}-${each.value.subnet_Unity}"
     Name  = "${var.project_name}-${each.value.subnet_name}"

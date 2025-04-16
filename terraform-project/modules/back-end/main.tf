@@ -6,21 +6,25 @@ data "aws_ami" "imagem_ec2" {
     values = ["al2023-ami-2023.*-x86_64"]
   }
 }
-
-resource "aws_security_group" "coninch_back_sg" {
+resource "aws_security_group" "grupo_b_back_sg" {
   vpc_id = var.vpc_id
-  name   = "coninch_back_sg"
+  name   = "grupo_b_back_sg"
   tags = {
-    Name = "coninch-back_sg"
+    Name = "grupo_b-back_sg"
   }
 }
 
-resource "aws_instance" "coninch_back_ec2" {
-  for_each      = toset(var.priv_subnets_id)
+resource "aws_instance" "grupo_b_back_ec2" {
+  count         = length(var.priv_subnets_id)
   ami           = data.aws_ami.imagem_ec2.id
   instance_type = "t2.micro"
-  subnet_id     = each.value
+  subnet_id     = var.priv_subnets_id[count.index]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
-    Name = "coninch_back_ec2"
+    Name = "grupo_b_back_ec2"
   }
 }

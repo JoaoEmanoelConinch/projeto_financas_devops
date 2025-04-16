@@ -4,8 +4,8 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "coninch-terraform-state"
-    key    = "terraform.tfstate"
+    bucket = "grupo-b-terraform-state"
+    key    = "production/terraform.tfstate"
     region = "us-west-1"
   }
 }
