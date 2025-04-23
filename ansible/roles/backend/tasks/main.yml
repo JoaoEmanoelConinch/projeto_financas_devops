@@ -1,0 +1,55 @@
+- name: Atualizar pacotes
+  yum:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Instalar Node.js 18 e npm
+  shell: |
+    curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
+    yum install -y nodejs
+  args:
+    executable: /bin/bash
+
+- name: Instalar pm2 globalmente
+  npm:
+    name: pm2
+    global: yes
+    executable: /usr/bin/npm
+
+- name: Criar diretório do backend
+  file:
+    path: /home/ec2-user/backend
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: '0755'
+
+- name: Copiar arquivos do backend para a instância
+  synchronize:
+    src: "{{ playbook_dir }}/../../backend/"
+    dest: /home/ec2-user/backend/
+    rsync_opts:
+      - "--chown=ec2-user:ec2-user"
+  delegate_to: localhost
+  become: false
+
+- name: Instalar dependências do projeto Node
+  npm:
+    path: /home/ec2-user/backend
+    state: present
+    executable: /usr/bin/npm
+
+- name: Iniciar a aplicação com PM2
+  command: pm2 start app.js --name backend -f
+  args:
+    chdir: /home/ec2-user/backend
+
+- name: Salvar o processo do PM2
+  command: pm2 save
+
+- name: Ativar PM2 na inicialização (systemd)
+  shell: |
+    pm2 startup systemd -u ec2-user --hp /home/ec2-user
+  args:
+    executable: /bin/bash

@@ -7,7 +7,7 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_eip" "eip_nat" {
-  vpc = true
+  domain = "vpc"
 }
 
 resource "aws_subnet" "priv_subnets" {

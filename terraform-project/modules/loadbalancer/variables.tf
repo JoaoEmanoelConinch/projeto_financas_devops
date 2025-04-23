@@ -13,3 +13,8 @@ variable "project_name" {
 variable "pub_subnets_id" {
     type = list(string)
 }
+
+variable "key_name" {
+  description = "Nome da chave SSH para acessar instâncias backend"
+  type        = string
+}

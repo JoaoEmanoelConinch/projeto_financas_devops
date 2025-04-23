@@ -1,0 +1,86 @@
+{
+  "instance_id_back_end": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "i-0685331cf0aded3d6",
+      "i-0180731d022666c75"
+    ]
+  },
+  "instance_id_front_end": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "i-0e179225b7e702fc8",
+      "i-0eedef3c855f84648"
+    ]
+  },
+  "instance_id_nginx": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "i-0c6d445eb02100e04",
+      "i-0c458087109c78e9d"
+    ]
+  },
+  "instance_ip_back_end": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "54.151.126.157",
+      "3.101.26.230"
+    ]
+  },
+  "instance_ip_front_end": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "54.183.73.145",
+      "3.101.155.155"
+    ]
+  },
+  "instance_ip_nginx": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "3.101.57.190",
+      "54.193.6.213"
+    ]
+  }
+}

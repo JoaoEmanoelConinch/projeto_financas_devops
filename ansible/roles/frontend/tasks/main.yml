@@ -1,0 +1,102 @@
+---
+- name: Atualizar pacotes
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Adicionar ec2-user ao sudoers sem senha
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^ec2-user'
+    line: 'ec2-user ALL=(ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: Baixar script de instalação do Node.js
+  get_url:
+    url: https://rpm.nodesource.com/setup_18.x
+    dest: /tmp/nodesource_setup.sh
+    mode: '0755'
+
+- name: Executar script de instalação do Node.js
+  command: bash /tmp/nodesource_setup.sh
+
+- name: Instalar Node.js
+  dnf:
+    name: nodejs
+    state: present
+
+- name: Instalar Angular CLI
+  npm:
+    name: "@angular/cli"
+    global: yes
+    executable: /usr/bin/npm
+
+- name: Instalar rsync
+  dnf:
+    name: rsync
+    state: present
+
+- name: Instalar http-server
+  npm:
+    name: http-server
+    global: yes
+    executable: /usr/bin/npm
+
+- name: Instalar pm2
+  npm:
+    name: pm2
+    global: yes
+    executable: /usr/bin/npm
+
+- name: Criar diretório do frontend na EC2 (caso não exista)
+  file:
+    path: /home/ec2-user/frontend
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: '0755'
+
+- name: Copiar arquivos do frontend para a instância
+  synchronize:
+    src: "{{ playbook_dir }}/../../frontend/"
+    dest: /home/ec2-user/frontend/
+    rsync_opts:
+      - "--chown=ec2-user:ec2-user"
+  delegate_to: localhost
+  become: false
+
+- name: Ajustar permissões do diretório frontend
+  file:
+    path: /home/ec2-user/frontend/
+    owner: ec2-user
+    group: ec2-user
+    recurse: yes
+
+- name: Instalar dependências do projeto Angular
+  npm:
+    path: /home/ec2-user/frontend/
+    state: present
+    executable: /usr/bin/npm
+
+- name: Fazer build do Angular
+  command: /usr/bin/ng build --configuration production --no-progress
+  args:
+    chdir: /home/ec2-user/frontend/
+  register: build_result
+  failed_when: build_result.rc != 0
+  retries: 3
+  delay: 30
+  timeout: 600
+  async: 600
+  poll: 10
+  become: yes
+
+- name: Mostrar saída do build
+  debug:
+    var: build_result.stdout_lines
+
+- name: Iniciar frontend com http-server via PM2
+  shell: pm2 start "http-server dist/frontend -p 80" --name frontend
+  args:
+    chdir: /home/ec2-user/frontend/
