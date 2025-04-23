@@ -11,7 +11,17 @@ variable "project_region" {
     type        = string
 }
 
-variable "priv_subnets_id" {
-    type        = list(string)
-    default     = []
+variable "pub_subnets_id" {
+    type = list(string)
+}
+
+variable "key_name" {
+  description = "Nome da chave SSH para acessar instâncias backend"
+  type        = string
+}
+
+variable "frontend_sg_id" {
+  description = "ID do Security Group do front-end"
+  type        = string
+  default     = null
 }

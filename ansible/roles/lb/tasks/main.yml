@@ -1,0 +1,26 @@
+---
+- name: Instalar NGINX
+  yum:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Copiar o arquivo de configuração do NGINX
+  copy:
+    src: "{{ playbook_dir }}/../files/frontend.conf"
+    dest: /etc/nginx/conf.d/frontend.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reinicia o NGINX
+
+- name: Remover o default do NGINX
+  file:
+    path: /etc/nginx/conf.d/default.conf
+    state: absent
+  notify: Reinicia o NGINX
+
+- name: Reinicia o NGINX
+  service:
+    name: nginx
+    state: restarted

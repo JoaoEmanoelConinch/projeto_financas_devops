@@ -1,0 +1,8 @@
+- name: Configurar frontend
+  hosts: frontend
+  become: yes
+  become_method: sudo
+  vars:
+    ansible_become_pass: SUDO_PASSWORD
+  roles:
+    - frontend
