@@ -5,19 +5,7 @@ all:
   children:
     nginx:
       hosts:
-        3.101.57.190:
-          ansible_user: ec2-user
-        54.193.6.213:
-          ansible_user: ec2-user
     backend:
       hosts:
-        54.151.126.157:
-          ansible_user: ec2-user
-        3.101.26.230:
-          ansible_user: ec2-user
     frontend:
       hosts:
-        54.183.73.145:
-          ansible_user: ec2-user
-        3.101.155.155:
-          ansible_user: ec2-user

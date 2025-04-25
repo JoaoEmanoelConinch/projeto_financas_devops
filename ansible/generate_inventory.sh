@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #Definir a variavel de ambiente SSH_KEY_PATH, alterar o caminho para o seu arquivo de chave SSH
-export SSH_KEY_PATH=/home/pc-gabriel/projeto_financas_devops/terraform-project/ambientes/dev/main-key.pem
+export SSH_KEY_PATH="~/Documents/+DEVS2Blu/projeto\ adriano/projeto_financas_devops/terraform-project/ambientes/dev/main-key.pem"
 
 # Caminho para o diretório onde o Terraform está localizado
 TERRAFORM_DIR="../terraform-project/ambientes/dev"
 
 # Caminho para o arquivo JSON com os outputs do Terraform
-terraform_output_file="../ansible/terraform_output.json"
+terraform_output_file="./terraform_output.json"
 
 # Gera o JSON com os outputs do Terraform
 terraform -chdir=$TERRAFORM_DIR output -json > $terraform_output_file
