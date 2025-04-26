@@ -33,3 +33,13 @@ module "back-end-prod" {
   
   depends_on = [ module.vpc-prod ]
 }
+
+module "acesso-prod" {
+  source          = "../../modules/acesso"
+  project_name    = var.project_name
+  project_region  = var.project_region
+  vpc_id          = module.vpc-prod.vpc_id
+  priv_subnets_id = module.vpc-prod.priv_subnets_id
+  
+  depends_on = [ module.vpc-prod ]
+}
